@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { NewEntrySchema } from './utils.ts'
 
 export const Weather = {
   Sunny: 'sunny',
@@ -19,6 +18,13 @@ export const Visibility = {
 } as const;
 
 export type Visibility = typeof Visibility[keyof typeof Visibility];
+
+export const NewEntrySchema = z.object({
+    weather: z.enum(Weather),
+    visibility: z.enum(Visibility),
+    date: z.iso.date(),
+    comment: z.string().optional()
+});
 
 // infer the type from schema
 export type NewDiaryEntry = z.infer<typeof NewEntrySchema>; 
